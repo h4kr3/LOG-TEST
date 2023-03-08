@@ -1,8 +1,8 @@
 const userHelpers = require('../../models/user/signin')
-const client = require("twilio")(
-  process.env.TWILIOID,
-  process.env.TWILIOPWD
-);
+// const client = require("twilio")(
+//   process.env.TWILIOID,
+//   process.env.TWILIOPWD
+// );
 
 
 module.exports = {
@@ -46,56 +46,56 @@ module.exports = {
       }
     });
   },
-  otpLogin: (req, res) => {
-    res.render("user/otp-login", { not: true });
-  },
-  postOtpLogin: (req, res) => {
-    userHelpers
-      .otpLogin(req.body)
-      .then((response) => {
-        let phone = response.user.phone;
-        client.verify
-          .services(process.env.TWILIOSID)
-          .verifications.create({
-            to: `+91${phone}`,
-            channel: "sms",
-          })
-          .then((data) => {
-            req.session.user = response.user;
-            res.render("user/otp-verification", { phone, not: true });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((response) => {
-        res.render("user/otp-login", { invalid: "Mobile Number Not Found" });
-      });
-  },
-  otpVerification: (req, res) => {
-    res.render("user/otp-verification", { not: true });
-  },
-  postOtpVerifiaction:(req, res) => {
-    client.verify
-      .services(process.env.TWILIOSID)
-      .verificationChecks.create({
-        to: `+91${req.body.mobile}`,
-        code: req.body.otp,
-      })
-      .then((data) => {
-        if (data.valid) {
-          req.session.userLoggedIn = true;
-          res.redirect("/");
-        } else {
-          delete req.session.user;
-          res.render("user/otp-verification", {
-            invalid: "Ivalid OTP please Enter Valid otp",
-          });
-        }
-      })
-      .catch((err) => {
-        delete req.session.user;
-        res.redirect("/signin");
-      });
-  }
+  // otpLogin: (req, res) => {
+  //   res.render("user/otp-login", { not: true });
+  // },
+  // postOtpLogin: (req, res) => {
+  //   userHelpers
+  //     .otpLogin(req.body)
+  //     .then((response) => {
+  //       let phone = response.user.phone;
+  //       client.verify
+  //         .services(process.env.TWILIOSID)
+  //         .verifications.create({
+  //           to: `+91${phone}`,
+  //           channel: "sms",
+  //         })
+  //         .then((data) => {
+  //           req.session.user = response.user;
+  //           res.render("user/otp-verification", { phone, not: true });
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     })
+  //     .catch((response) => {
+  //       res.render("user/otp-login", { invalid: "Mobile Number Not Found" });
+  //     });
+  // },
+  // otpVerification: (req, res) => {
+  //   res.render("user/otp-verification", { not: true });
+  // },
+  // postOtpVerifiaction:(req, res) => {
+  //   client.verify
+  //     .services(process.env.TWILIOSID)
+  //     .verificationChecks.create({
+  //       to: `+91${req.body.mobile}`,
+  //       code: req.body.otp,
+  //     })
+  //     .then((data) => {
+  //       if (data.valid) {
+  //         req.session.userLoggedIn = true;
+  //         res.redirect("/");
+  //       } else {
+  //         delete req.session.user;
+  //         res.render("user/otp-verification", {
+  //           invalid: "Ivalid OTP please Enter Valid otp",
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       delete req.session.user;
+  //       res.redirect("/signin");
+  //     });
+  // }
 }

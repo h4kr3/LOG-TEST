@@ -5,7 +5,7 @@ module.exports = {
         let category = await productHelper.getAllCategory();
         let products = await productHelper.getAllProducts();
         let bannerImage = await banner.getImageBanner()
-        console.log(bannerImage);
+        
         if (req.session.userLoggedIn) {
           let cartCount = await productHelper.cartCount(req.session.user._id)
           res.render("user/index", { usersi: true, category, cartCount, products,bannerImage});

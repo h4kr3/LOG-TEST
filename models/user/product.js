@@ -279,7 +279,7 @@ module.exports = {
                     order.paymentMethod = 'noBal'
                   }
                 
-            }else if(order.paymentMethod==='wallet'){
+            }else if(order.paymentMethod==='online'){
                 status = 'pending'
             }else{
                 order.paymentMethod = null

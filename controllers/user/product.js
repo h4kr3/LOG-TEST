@@ -84,6 +84,7 @@ module.exports = {
         res.json({ cod: true })
       }
       else if (req.body['paymentMethod'] == 'online') {
+        console.log('wfgegh');
         productHelper.generateRazorpay(response.insertedId, req.body.total).then((response) => {
           res.json({ response })
         })

@@ -53,20 +53,20 @@ module.exports = {
     userHelpers
       .otpLogin(req.body)
       .then((response) => {
-        // let phone = response.user.phone;
-        // client.verify
-        //   .services(process.env.TWILIOSID)
-        //   .verifications.create({
-        //     to: `+91${phone}`,
-        //     channel: "sms",
-        //   })
-        //   .then((data) => {
-        //     req.session.user = response.user;
-        //     res.render("user/otp-verification", { phone, not: true });
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        let phone = response.user.phone;
+        client.verify
+          .services(process.env.TWILIOSID)
+          .verifications.create({
+            to: `+91${phone}`,
+            channel: "sms",
+          })
+          .then((data) => {
+            req.session.user = response.user;
+            res.render("user/otp-verification", { phone, not: true });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((response) => {
         res.render("user/otp-login", { invalid: "Mobile Number Not Found" });

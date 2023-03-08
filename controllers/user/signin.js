@@ -1,8 +1,7 @@
 const userHelpers = require('../../models/user/signin')
-require('dotenv').config()
 const client = require("twilio")(
-  process.env.TWILIOID,
-  process.env.TWILIOPWD
+  'AC14ad6385e6c7a33c4c252588994e7f58',
+  '8831cc9d6f9e5b1e24c63e74e20945c1'
 );
 
 
@@ -56,7 +55,7 @@ module.exports = {
       .then((response) => {
         let phone = response.user.phone;
         client.verify
-          .services(process.env.TWILIOSID)
+          .services('VA1eb49654dd54b317096ff05f3dbfd13b')
           .verifications.create({
             to: `+91${phone}`,
             channel: "sms",
@@ -78,7 +77,7 @@ module.exports = {
   },
   postOtpVerifiaction:(req, res) => {
     client.verify
-      .services(process.env.TWILIOSID)
+      .services('VA1eb49654dd54b317096ff05f3dbfd13b')
       .verificationChecks.create({
         to: `+91${req.body.mobile}`,
         code: req.body.otp,

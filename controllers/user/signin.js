@@ -8,6 +8,8 @@ const client = require("twilio")(
 module.exports = {
   userSignin: (req, res, next) => {
     res.render("user/signin", { userlogin: true });
+    console.log(process.env.USERNAME);
+
   },
   postUserSignin: async (req, res) => {
     userHelpers.doLogin(req.body).then((response) => {
